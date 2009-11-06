@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<colors lang="en-US">
+	<interface>
+		<chatwindow font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%007}" />
+		<sendchatbox font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%128}" />
+		
+		<channellabel font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%007}" />
+		<channeluserlist font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%007}" />
+		<userblizzard color="{%121}" />
+		<usersysop color="{%022}" />
+		<userchanop color="{%022}" />
+		<usermoderator color="{%039}" />
+		<userme color="{%124}" />
+		
+		<!-- for those of you who dont know:
+			userblizzard
+				Battle.net - Blizzard icon
+				iCCup - Admin icon
+			usersysop
+				Battle.net - b.net icon
+				iCCup - GavelX icon
+			userchanop
+				Battle.net - Gavel icon
+				iCCup - GavelX icon
+			usermoderator
+				Battle.net - Shout cone icon
+				iCCup - GOSU icon
+		-->
+		
+		<friendslist font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%007}" />
+		<friendmutual font="Tahoma" size="8.25" forecolor="{%063}" backcolor="{%007}" />
+		<friend font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%007}" />
+		
+		<botnetlabel font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%007}" />
+		<botnetuserlist font="Tahoma" size="8.25" forecolor="{%135}" backcolor="{%007}" />
+	</interface>
+	
+	<text>
+		<bnet>
+			<accountdoesnotexist>{%024} [($ts)] {%111}BNET ($gt) Account does not exist</accountdoesnotexist>
+			<accountisbanned>{%024} [($ts)] {%111}BNET ($gt) Account is banned</accountisbanned>
+			<accountlogonaccepted>{%024} [($ts)] {%051}BNET ($gt) Account logon accepted</accountlogonaccepted>
+			<accountlogonproof>{%024} [($ts)] {%137}BNET ($gt) Sending logon proof...</accountlogonproof>
+			<accountlogonsuccess>{%024} [($ts)] {%051}BNET ($gt) Successfully logged in</accountlogonsuccess>
+			<accountlogonsuccesssalt>{%024} [($ts)] {%051}BNET ($gt) Successfully logged in (account requires salt)</accountlogonsuccesssalt>
+			<accountupgrade>{%024} [($ts)] {%111}BNET ($gt) Account requires upgrade (should not appear!)</accountupgrade>
+			<accountunknownerror>{%024} [($ts)] {%111}BNET ($gt) Unknown account logon error</accountunknownerror>
+			<blizzardtalk>{%024} [($ts)] {%115}($lt){%121}($arg0){%115}($gt) {%135}($arg1)</blizzardtalk>
+			<blizzardemote>{%024} [($ts)] {%115}*{%121}($arg0) {%115}($arg1)</blizzardemote>
+			<broadcast>{%024} [($ts)] {%137}BNET ($gt) ($arg0)</broadcast>
+			<cdkeybanned>{%024} [($ts)] {%111}BNET ($gt) CD-Key is banned</cdkeybanned>
+			<channeldoesnotexist>{%024} [($ts)] {%111}Channel does not exist ($arg0)</channeldoesnotexist>
+			<channeljoined>{%024} [($ts)] Entered channel {%139}($arg0)</channeljoined>
+			<channelfull>{%024} [($ts)] {%111}Channel is full ($arg0)</channelfull>
+			<channelrestricted>{%024} [($ts)] {%111}Channel is restricted ($arg0)</channelrestricted>
+			<chanoptalk>{%024} [($ts)] {%115}($lt){%022}($arg0){%115}($gt) {%022}($arg1)</chanoptalk>
+			<chanopemote>{%024} [($ts)] {%115}*{%022}($arg0) {%115}($arg1)</chanopemote>
+			<connecting>{%024} [($ts)] {%137}BNET ($gt) Connecting...</connecting>
+			<connected>{%024} [($ts)] {%051}BNET ($gt) Connected</connected>
+			<disconnected>{%024} [($ts)] {%111}BNET ($gt) Disconnected</disconnected>
+			<enteredchat>{%024} [($ts)] {%051}BNET ($gt) Entered chat as {%124}($arg0)</enteredchat>
+			<error>{%024} [($ts)] {%111}($arg0)</error>
+			<exception>{%024} [($ts)] {%111}BNET ($gt) Exception: ($arg0)</exception>
+			<flagsupdate></flagsupdate>
+			<friendsadd>{%024} [($ts)] {%137}BNET ($gt) Added friend {%063}($arg0) {%137}: ($arg3) (with {%063}($arg1){%137}) ({%063}($arg2){%137}) - {%063}($arg4)</friendsadd>
+			<friendslist>{%024} [($ts)] {%137}BNET ($gt) Friend {%063}($arg0) {%137}is ($arg3) (with {%063}($arg1){%137}) ({%063}($arg2){%137}) - {%063}($arg4)</friendslist>
+			<friendsremove>{%024} [($ts)]{%024} [($ts)] {%137}BNET ($gt) Friend {%063}($arg0) {%137}has been removed</friendsremove>
+			<friendsposition>{%024} [($ts)] {%137}BNET ($gt) Friend {%063}($arg0) {%137} moved to position {%063}($arg1)</friendsposition>
+			<!--
+				in general, friendsupdate won't be received (usually only
+				received by mutual friends), but some PvPGN servers may
+				treat the friends list differently
+			-->
+			<friendsupdate>{%024} [($ts)] {%137}BNET ($gt) Friend {%063}($arg0) {%137}is ($arg3) (with {%063}($arg1){%137}) ({%063}($arg2){%137}) - {%063}($arg4)</friendsupdate>
+			<gameversiondowngrade>{%024} [($ts)] {%111}BNET ($gt) Game version too new</gameversiondowngrade>
+			<information>{%024} [($ts)] {%137}($arg0)</information>
+			<invalidcdkey>{%024} [($ts)] {%111}BNET ($gt) Invalid CD-Key</invalidcdkey>
+			<invalidgameversion>{%024} [($ts)] {%111}BNET ($gt) Invalid game version (update hash files)</invalidgameversion>
+			<invalidpassword>{%024} [($ts)] {%111}BNET ($gt) Invalid password</invalidpassword>
+			<keyinuse>{%024} [($ts)] {%111}BNET ($gt) CD-Key in use: {%135}($arg0)</keyinuse>
+			<moderatortalk>{%024} [($ts)] {%115}($lt){%039}($arg0){%115}($gt) {%039}($arg1)</moderatortalk>
+			<moderatoremote>{%024} [($ts)] {%115}*{%039}($arg0) {%115}($arg1)</moderatoremote>
+			<mutualfriendslist>{%024} [($ts)] {%137}BNET ($gt) Mutual friend {%063}($arg0) {%137}is ($arg3) (with {%063}($arg1){%137}) ({%063}($arg2){%137}) - {%063}($arg4)</mutualfriendslist>
+			<mutualfriendsadd>{%024} [($ts)] {%137}BNET ($gt) Added mutual friend {%063}($arg0) {%137}: ($arg3) (with {%063}($arg1){%137}) ({%063}($arg2){%137}) - {%063}($arg4)</mutualfriendsadd>
+			<mutualfriendsremove>{%024} [($ts)]{%024} [($ts)] {%137}BNET ($gt) Mutual friend {%063}($arg0) {%137}has been removed</mutualfriendsremove>
+			<mutualfriendsupdate>{%024} [($ts)] {%137}BNET ($gt) Mutual friend {%063}($arg0) {%137}is ($arg3) (with {%063}($arg1){%137}) ({%063}($arg2){%137}) - {%063}($arg4)</mutualfriendsupdate>
+			<mutualfriendsposition>{%024} [($ts)] {%137}BNET ($gt) Mutual friend {%063}($arg0) {%137} moved to position {%063}($arg1)</mutualfriendsposition>
+			<oldgameversion>{%024} [($ts)] {%111}BNET ($gt) Old game version (update hash files)</oldgameversion>
+			<registeremail>{%024} [($ts)] {%111}BNET ($gt) Server requests email registration</registeremail>
+			<sendchatmessage>{%024} [($ts)] {%139}($lt){%124}($arg0){%139}($gt) ($arg1)</sendchatmessage>
+			<sendingloginrequest>{%024} [($ts)] {%137}BNET ($gt) Sending login request...</sendingloginrequest>
+			<serverclosedconnection>{%024} [($ts)] {%111}BNET ($gt) Server closed connection</serverclosedconnection>
+			<showuser></showuser>
+			<socketerror>{%024} [($ts)] {%111}BNET ($gt) Error #($arg0): ($arg1)</socketerror>
+			<sysoptalk>{%024} [($ts)] {%115}($lt){%022}($arg0){%115}($gt) {%022}($arg1)</sysoptalk>
+			<sysopemote>{%024} [($ts)] {%115}*{%022}($arg0) {%115}($arg1)</sysopemote>
+			<unhandledpacket>{%024} [($ts)] {%098}BNET ($gt) Unhandled packet: ($arg0)($newline)($arg1)</unhandledpacket>
+			<useremote>{%024} [($ts)] {%115}*{%083}($arg0) {%115}($arg1)</useremote>
+			<userjoined>{%024} [($ts)] User {%121}($arg0) {%024}[{%115}($arg1){%024}:{%115}($arg2){%024}] joined the channel</userjoined>
+			<userleft>{%024} [($ts)] User {%121}($arg0) {%024}[{%115}($arg1){%024}:{%115}($arg2){%024}] left the channel</userleft>
+			<usertalk>{%024} [($ts)] {%115}($lt){%113}($arg0){%115}($gt) {%065}($arg1)</usertalk>
+			<usinghashfile>{%024} [($ts)] {%063}BNET ($gt) Using hash file: ($arg1)</usinghashfile>
+			<usinglockdown>{%024} [($ts)] {%063}BNET ($gt) Using lockdown</usinglockdown>
+			<verifyinggameversion>{%024} [($ts)] {%137}BNET ($gt) Verifying game version...</verifyinggameversion>
+			<versioncheckfailed>{%024} [($ts)] {%111}BNET ($gt) Version check failed</versioncheckfailed>
+			<versioncheckpassed>{%024} [($ts)] {%051}BNET ($gt) Version check passed</versioncheckpassed>
+			<war3serverinvalid>{%024} [($ts)] {%111}BNET ($gt) Invalid server signature</war3serverinvalid>
+			<whispersent>{%024} [($ts)] {%115}($lt){%024}To: {%121}($arg0){%115}($gt) {%067}($arg1)</whispersent>
+			<whisperrecieved>{%024} [($ts)] {%115}($lt){%024}From: {%121}($arg0){%115}($gt) {%067}($arg1)</whisperrecieved>
+			<wrongproductinfo>{%024} [($ts)] {%111}BNET ($gt) Wrong product info (CD-Key is for another game)</wrongproductinfo>
+		</bnet>
+		
+		<bni>
+			<complete>{%024} [($ts)] {%051}BNI ($gt) Icon processing complete</complete>
+			<constructing>{%024} [($ts)] {%137}BNI ($gt) Constructing icons...</constructing>
+			<count>{%024} [($ts)] {%063}BNI ($gt) Received ($arg0) icons</count>
+			<extracting>{%024} [($ts)] {%137}BNI ($gt) Extracting icons...</extracting>
+		</bni>
+
+		<bnftp>
+			<downloadfinished>{%024} [($ts)] {%051}BNFTP ($gt) Finished download of {%063}($arg0)</downloadfinished>
+			<downloadstarted>{%024} [($ts)] {%137}BNFTP ($gt) Downloading file {%063}($arg0){%137}...</downloadstarted>
+		</bnftp>
+		
+		<botnet>
+		</botnet>
+		
+		<parts>
+			<friends>
+				<statusaway>{%135}Away</statusaway>
+				<statusdnd>{%135}DND</statusdnd>
+				<statusdndaway>{%135}DND/Away</statusdndaway>
+				<statusavailable>{%135}Available</statusavailable>
+				<locationoffline>{%135}Offline</locationoffline>
+				<localtionnotinchat>{%135}Not in chat</localtionnotinchat>
+				<locationinchat>{%135}In chat</locationinchat>
+				<locationinpublicgame>{%135}In public game</locationinpublicgame>
+				<locationinprivategame>{%135}In private game</locationinprivategame>
+				<locationnonmutual>{%135}($lt)non-mutual($gt)</locationnonmutual>
+				<locationunknown>{%135}Unknown location</locationunknown>
+			</friends>
+		</parts>
+	</text>
+</colors>
+
