@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F551DC49-CE9A-4A93-9957-6F435551A58B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Rebirth.My.MyApplication</StartupObject>
+    <RootNamespace>Rebirth</RootNamespace>
+    <AssemblyName>Rebirth</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <SignAssembly>false</SignAssembly>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationIcon>rebirthbot.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Rebirth.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Rebirth.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MBNCSUtil, Version=2.1.6.25, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\MBNCSUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Bnet\BnetConnection.vb" />
+    <Compile Include="Classes\Bnet\BnetIcon.vb" />
+    <Compile Include="Classes\Botnet\BotnetConnection.vb" />
+    <Compile Include="Classes\Botnet\BotnetUser.vb" />
+    <Compile Include="Classes\Botnet\BotnetUserlist.vb" />
+    <Compile Include="Classes\Botnet\SentBotnetData.vb" />
+    <Compile Include="Classes\Interface\ChatItem.vb" />
+    <Compile Include="Classes\Interface\ChatNode.vb" />
+    <Compile Include="Classes\Interface\ColorItem.vb" />
+    <Compile Include="Classes\Interface\LanguageItem.vb" />
+    <Compile Include="Classes\IRC\IrcConnection.vb" />
+    <Compile Include="Classes\Misc\DownloadFile.vb" />
+    <Compile Include="Classes\Misc\ProfileInfo.vb" />
+    <Compile Include="Classes\Misc\WebsiteCheck.vb" />
+    <Compile Include="Classes\Settings\BnetConfig.vb" />
+    <Compile Include="Classes\Settings\BotnetConfig.vb" />
+    <Compile Include="Classes\Settings\Config.vb" />
+    <Compile Include="Classes\Interface\FastPix.vb" />
+    <Compile Include="Classes\Bnet\IconsProcessor.vb" />
+    <Compile Include="Classes\Interface\InterfaceItem.vb" />
+    <Compile Include="Classes\Interface\MasterColor.vb" />
+    <Compile Include="Classes\Settings\IrcConfig.vb" />
+    <Compile Include="Classes\Settings\MasterSettings.vb" />
+    <Compile Include="Classes\Bnet\SentBnetData.vb" />
+    <Compile Include="Classes\Settings\Settings.vb" />
+    <Compile Include="Classes\Interface\Localization.vb" />
+    <Compile Include="Forms\Configuration.Designer.vb">
+      <DependentUpon>Configuration.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuration.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoadingScreen.Designer.vb">
+      <DependentUpon>LoadingScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoadingScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MyProfile.Designer.vb">
+      <DependentUpon>MyProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MyProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserProfile.Designer.vb">
+      <DependentUpon>UserProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Functions.vb" />
+    <Compile Include="Classes\Bnet\BnetFtp.vb" />
+    <Compile Include="Modules\Extends.vb" />
+    <Compile Include="User Controls\BotInterface.Designer.vb">
+      <DependentUpon>BotInterface.vb</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\BotInterface.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\Declares.vb" />
+    <Compile Include="Forms\frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMain.Designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Forms\LoadProfile.Designer.vb">
+      <DependentUpon>LoadProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoadProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ColorSwatch.Designer.vb">
+      <DependentUpon>ColorSwatch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ColorSwatch.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User Controls\IrcInterface.Designer.vb">
+      <DependentUpon>IrcInterface.vb</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\IrcInterface.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\ColorSwatch.resx">
+      <DependentUpon>ColorSwatch.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Configuration.resx">
+      <DependentUpon>Configuration.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoadingScreen.resx">
+      <DependentUpon>LoadingScreen.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MyProfile.resx">
+      <DependentUpon>MyProfile.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserProfile.resx">
+      <DependentUpon>UserProfile.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\BotInterface.resx">
+      <DependentUpon>BotInterface.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMain.resx">
+      <DependentUpon>frmMain.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoadProfile.resx">
+      <DependentUpon>LoadProfile.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\IrcInterface.resx">
+      <DependentUpon>IrcInterface.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="rebirthbot.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
