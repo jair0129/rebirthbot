@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data lang="en-US">
+	<menus>
+		<loadbot>Load Bot</loadbot>
+		<unloadbot>Unoad Bot</unloadbot>
+		<connection>Connection</connection>
+		<bnetreconnect>Reconnect</bnetreconnect>
+		<bnetdisconnect>Disconnect</bnetdisconnect>
+		<botnetreconnect>Reconnect (Botnet)</botnetreconnect>
+		<botnetdisconnect>Disconnect (Botnet)</botnetdisconnect>
+	</menus>
+	
+	<tabs>
+		<channel>Channel</channel>
+		<friends>Friends</friends>
+		<botnet>Botnet</botnet>
+		<clan>Clan</clan>
+	</tabs>
+</data>

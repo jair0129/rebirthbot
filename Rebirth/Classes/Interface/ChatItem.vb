@@ -12,6 +12,7 @@
         k = raw.Split("{%")
         For Each item As String In k
             If item = "" Then Continue For
+
             colorcode = item.Substring(0, 5)
             text = item.Substring(5)
 

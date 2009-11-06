@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data lang="en-US">
+	<menus>
+		<loadbot>Загрузить бота</loadbot>
+		<unloadbot>Выгрузить бота</unloadbot>
+		<connection>Подключить</connection>
+		<bnetreconnect>Переподключить</bnetreconnect>
+		<bnetdisconnect>Отключить</bnetdisconnect>
+		<botnetreconnect>Переподключить (Botnet)</botnetreconnect>
+		<botnetdisconnect>Отключить (Botnet)</botnetdisconnect>
+	</menus>
+	
+	<tabs>
+		<channel>Channel</channel>
+		<friends>Friends</friends>
+		<botnet>Botnet</botnet>
+		<clan>Clan</clan>
+	</tabs>
+</data>

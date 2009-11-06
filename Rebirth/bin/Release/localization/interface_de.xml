@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data lang="de">
+	<menus>
+		<loadbot>Bot Laden</loadbot>
+		<unloadbot>Bot Trennen</unloadbot>
+		<connection>Verbindung</connection>
+		<bnetreconnect>Erneut verbinden</bnetreconnect>
+		<bnetdisconnect>Verbindung trennen</bnetdisconnect>
+		<botnetreconnect>Erneut verbinden (Botnet)</botnetreconnect>
+		<botnetdisconnect>Verbindung trennen (Botnet)</botnetdisconnect>
+	</menus>
+	
+	<tabs>
+		<channel>Channel</channel>
+		<friends>Freunde</friends>
+		<botnet>Botnet</botnet>
+		<clan>Clan</clan>
+	</tabs>
+</data>
