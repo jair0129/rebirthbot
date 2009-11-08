@@ -1,8 +1,33 @@
-﻿Imports System.IO
+﻿'RebirthBot
+'Copyright (C) 2009 by Spencer Ragen
+'
+'Redistribution and use in source and binary forms, with or without modification, 
+'are permitted provided that the following conditions are met: 
+'
+'1.) Redistributions of source code must retain the above copyright notice, 
+'this list of conditions and the following disclaimer. 
+'2.) Redistributions in binary form must reproduce the above copyright notice, 
+'this list of conditions and the following disclaimer in the documentation 
+'and/or other materials provided with the distribution. 
+'3.) The name of the author may not be used to endorse or promote products derived 
+'from this software without specific prior written permission. 
+'
+'See LICENSE.TXT that should have accompanied this software for full terms and 
+'conditions.
+
+'  This class is not required, as MBNCSUtil has icon processing capabilities.
+
+Imports System.IO
 Imports System.Drawing.Imaging
 Imports MBNCSUtil
 Imports MBNCSUtil.Data
 
+''' <summary>
+''' True BNI archive processor
+''' </summary>
+''' <remarks>This is a fairly direct port from Scott's (BNU-Camel's) BNI processor
+''' from BNU Bot 2.  This class only supports parsing True BNI archives, and not the
+''' WAR3 renamed MPQ archives.</remarks>
 Public Class IconsProcessor
     Private m_file As String
     Private m_outputTemp As String
@@ -13,15 +38,35 @@ Public Class IconsProcessor
     Public Event ExtractingIcons()
     Public Event ConstructingIcons()
 
+    ''' <summary>
+    ''' Instantiate a new processor
+    ''' </summary>
+    ''' <param name="filename">File to load for processing</param>
+    ''' <remarks></remarks>
     Public Sub New(ByVal filename As String)
         m_file = filename
     End Sub
 
+    ''' <summary>
+    ''' Get the real position of the pixel currently being processed.
+    ''' </summary>
+    ''' <param name="i">currentPixel from ReadIcons()</param>
+    ''' <param name="height">Icon height</param>
+    ''' <param name="width">Icon height</param>
+    ''' <returns>The real position of the pixel</returns>
+    ''' <remarks></remarks>
     Private Function getRealPixelPosition(ByVal i As Integer, ByVal height As Integer, ByVal width As Integer) As Integer
         Dim x As Integer = i Mod width
         Return ((height - 1) * width) - i + (x * 2)
     End Function
 
+    ''' <summary>
+    ''' Processes the True BNI archive.
+    ''' </summary>
+    ''' <returns>A list of BnetIcon objects</returns>
+    ''' <remarks>ReadIcons() opens the archive, extracts the icon image, and then
+    ''' proceedes to split it into individual icons and stores associated values.
+    ''' It can be quite easily modified to save each icon image to disk.</remarks>
     Public Function ReadIcons() As List(Of BnetIcon)
         Dim i As Integer
         Dim bniVer As Integer

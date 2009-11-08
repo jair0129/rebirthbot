@@ -51,16 +51,16 @@ Partial Class BotInterface
         Me.lvBotnetUsers = New System.Windows.Forms.ListView
         Me.ColumnHeader11 = New System.Windows.Forms.ColumnHeader
         Me.txtBotnet = New System.Windows.Forms.TextBox
+        Me.tabClan = New System.Windows.Forms.TabPage
+        Me.lvClan = New System.Windows.Forms.ListView
+        Me.ColumnHeader7 = New System.Windows.Forms.ColumnHeader
+        Me.txtClan = New System.Windows.Forms.TextBox
         Me.ColumnHeader1 = New System.Windows.Forms.ColumnHeader
         Me.ColumnHeader2 = New System.Windows.Forms.ColumnHeader
         Me.ColumnHeader3 = New System.Windows.Forms.ColumnHeader
         Me.ColumnHeader4 = New System.Windows.Forms.ColumnHeader
         Me.ColumnHeader5 = New System.Windows.Forms.ColumnHeader
-        Me.tabClan = New System.Windows.Forms.TabPage
         Me.ColumnHeader6 = New System.Windows.Forms.ColumnHeader
-        Me.lvClan = New System.Windows.Forms.ListView
-        Me.ColumnHeader7 = New System.Windows.Forms.ColumnHeader
-        Me.txtClan = New System.Windows.Forms.TextBox
         Me.tabLists.SuspendLayout()
         Me.tabChannel.SuspendLayout()
         Me.ChannelContext.SuspendLayout()
@@ -303,26 +303,6 @@ Partial Class BotInterface
         Me.txtBotnet.TabStop = False
         Me.txtBotnet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Width = 34
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Width = 111
-        '
-        'ColumnHeader3
-        '
-        Me.ColumnHeader3.Width = 0
-        '
-        'ColumnHeader4
-        '
-        Me.ColumnHeader4.Width = 0
-        '
-        'ColumnHeader5
-        '
-        Me.ColumnHeader5.Width = 0
-        '
         'tabClan
         '
         Me.tabClan.Controls.Add(Me.lvClan)
@@ -334,10 +314,6 @@ Partial Class BotInterface
         Me.tabClan.TabIndex = 3
         Me.tabClan.Text = "Clan"
         Me.tabClan.UseVisualStyleBackColor = True
-        '
-        'ColumnHeader6
-        '
-        Me.ColumnHeader6.Width = 150
         '
         'lvClan
         '
@@ -371,6 +347,30 @@ Partial Class BotInterface
         Me.txtClan.TabIndex = 11
         Me.txtClan.TabStop = False
         Me.txtClan.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Width = 34
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Width = 111
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Width = 0
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Width = 0
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Width = 0
+        '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Width = 150
         '
         'BotInterface
         '

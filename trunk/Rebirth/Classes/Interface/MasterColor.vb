@@ -1,5 +1,26 @@
-﻿Imports System.Xml
+﻿'RebirthBot
+'Copyright (C) 2009 by Spencer Ragen
+'
+'Redistribution and use in source and binary forms, with or without modification, 
+'are permitted provided that the following conditions are met: 
+'
+'1.) Redistributions of source code must retain the above copyright notice, 
+'this list of conditions and the following disclaimer. 
+'2.) Redistributions in binary form must reproduce the above copyright notice, 
+'this list of conditions and the following disclaimer in the documentation 
+'and/or other materials provided with the distribution. 
+'3.) The name of the author may not be used to endorse or promote products derived 
+'from this software without specific prior written permission. 
+'
+'See LICENSE.TXT that should have accompanied this software for full terms and 
+'conditions.
 
+Imports System.Xml
+
+''' <summary>
+''' Master interface and textevent color settings
+''' </summary>
+''' <remarks>Contains separate routines for text events and interface settings</remarks>
 Public Class MasterColor
     Private mc_ChatWindow As InterfaceItem
     Private mc_ChannelLabel As InterfaceItem
@@ -8,6 +29,7 @@ Public Class MasterColor
     Private mc_BotnetLabel As InterfaceItem
     Private mc_BotnetUserList As InterfaceItem
     Private mc_FriendsList As InterfaceItem
+    Private mc_ClanList As InterfaceItem
 
     Private mc_Blizzard As ColorItem
     Private mc_SysOp As ColorItem
@@ -19,6 +41,10 @@ Public Class MasterColor
     Public Event LoadTextEventsFailed()
     Public Event LoadTextEventsSucceeded(ByVal Events As Collection)
 
+    ''' <summary>
+    ''' Load colors for interface objects
+    ''' </summary>
+    ''' <param name="Filename">Actually the Profilename to load</param>
     Public Sub LoadColors(ByVal Filename As String)
         Dim m_xmld As XmlDocument
         Dim Events As New Collection
@@ -35,6 +61,7 @@ Public Class MasterColor
         mc_BotnetLabel = Me.SetInterfaceItem(m_xmld, "/colors/interface/botnetlabel", "botnetlabel")
         mc_BotnetUserList = Me.SetInterfaceItem(m_xmld, "/colors/interface/botnetuserlist", "botnetuserlist")
         mc_FriendsList = Me.SetInterfaceItem(m_xmld, "/colors/interface/friendslist", "friendslist")
+        mc_ClanList = Me.SetInterfaceItem(m_xmld, "/colors/interface/clanlist", "clanlist")
 
         mc_Blizzard = GetUserFlagColor(m_xmld, "/colors/interface/userblizzard")
         mc_SysOp = GetUserFlagColor(m_xmld, "/colors/interface/usersysop")
@@ -66,6 +93,13 @@ Public Class MasterColor
                 Events.Add(ci, "friends" & str)
                 If ci Is Nothing Then Debug.Print(str & " > nothing")
             Next
+
+            For Each str As String In ChannelTypeParts
+                Dim ci As ChatItem = GetTextItem(m_xmld, "parts/channel/" & str)
+                Events.Add(ci, "channel" & str)
+                If ci Is Nothing Then Debug.Print(str & " > nothing")
+            Next
+
             m_Events = Events
 
             RaiseEvent LoadTextEventsSucceeded(Events)
@@ -74,6 +108,13 @@ Public Class MasterColor
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Retrieve a value from the XmlDocument, transcribe it to an InterfaceItem, and return it
+    ''' </summary>
+    ''' <param name="xmlDoc">Document to get value from</param>
+    ''' <param name="path">Path to the value</param>
+    ''' <param name="name">Name of the InterfaceItem</param>
+    ''' <returns>InterfaceItem created from the value obtained from the XmlDocument</returns>
     Private Function SetInterfaceItem(ByRef xmlDoc As XmlDocument, ByVal path As String, ByVal name As String) As InterfaceItem
         Dim ii As InterfaceItem = Nothing
         Dim m_nodelist As XmlNodeList
@@ -95,6 +136,13 @@ Public Class MasterColor
         Return ii
     End Function
 
+    ''' <summary>
+    ''' Obtain the color associated with a given server flags type
+    ''' </summary>
+    ''' <param name="xmlDoc"></param>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Private Function GetUserFlagColor(ByRef xmlDoc As XmlDocument, ByVal path As String) As ColorItem
         Dim ret As ColorItem = ColorList(135)
         Dim m_nodelist As XmlNodeList
@@ -115,12 +163,21 @@ Public Class MasterColor
 
         m_nodelist = xmlDoc.SelectNodes("/colors/text/" & name)
         For Each m_node In m_nodelist
-            ret = New ChatItem(m_node.InnerText, name)
+            If name.IndexOf("parts/") >= 0 Then
+                ret = New ChatItem(m_node.InnerText, name, True)
+            Else
+                ret = New ChatItem(m_node.InnerText, name)
+            End If
         Next
 
         Return ret
     End Function
 
+    ''' <summary>
+    ''' Save all the fancy colors
+    ''' </summary>
+    ''' <param name="Filename">Actually the Profilename</param>
+    ''' <param name="tEvents">The TextEvents object</param>
     Public Sub SaveColors(ByVal Filename As String, ByVal tEvents As Collection)
         Dim settings As New XmlWriterSettings()
         settings.Indent = True
@@ -268,6 +325,8 @@ Public Class MasterColor
         End Using
     End Sub
 
+    '' Below is quite possibly the crappiest way I could have done what I did
+
     Public Sub SetChatWindow(ByVal iFont As System.Drawing.Font, ByVal cForeColor As ColorItem, ByVal cBackColor As ColorItem)
         mc_ChatWindow = New InterfaceItem("chatwindow", iFont, cForeColor, cBackColor)
     End Sub
@@ -282,6 +341,22 @@ Public Class MasterColor
 
     Public Sub SetSendChatBox(ByVal iFont As System.Drawing.Font, ByVal cForeColor As ColorItem, ByVal cBackColor As ColorItem)
         mc_SendChatBox = New InterfaceItem("sendchatbox", iFont, cForeColor, cBackColor)
+    End Sub
+
+    Public Sub SetFriendsList(ByVal iFont As System.Drawing.Font, ByVal cForeColor As ColorItem, ByVal cBackColor As ColorItem)
+        mc_FriendsList = New InterfaceItem("friendslist", iFont, cForeColor, cBackColor)
+    End Sub
+
+    Public Sub SetBotnetLabel(ByVal iFont As System.Drawing.Font, ByVal cForeColor As ColorItem, ByVal cBackColor As ColorItem)
+        mc_BotnetLabel = New InterfaceItem("botnetlabel", iFont, cForeColor, cBackColor)
+    End Sub
+
+    Public Sub SetBotnetUserList(ByVal iFont As System.Drawing.Font, ByVal cForeColor As ColorItem, ByVal cBackColor As ColorItem)
+        mc_BotnetUserList = New InterfaceItem("botnetuserlist", iFont, cForeColor, cBackColor)
+    End Sub
+
+    Public Sub SetClanUserList(ByVal iFont As System.Drawing.Font, ByVal cForeColor As ColorItem, ByVal cBackColor As ColorItem)
+        mc_ClanList = New InterfaceItem("clanlist", iFont, cForeColor, cBackColor)
     End Sub
 
     Public ReadOnly Property GetChatWindow() As InterfaceItem
@@ -317,6 +392,12 @@ Public Class MasterColor
     Public ReadOnly Property GetBotnetUserList() As InterfaceItem
         Get
             Return mc_BotnetUserList
+        End Get
+    End Property
+
+    Public ReadOnly Property GetClanList() As InterfaceItem
+        Get
+            Return mc_ClanList
         End Get
     End Property
 

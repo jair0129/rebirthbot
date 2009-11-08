@@ -1,4 +1,21 @@
-﻿Imports System.IO
+﻿'RebirthBot
+'Copyright (C) 2009 by Spencer Ragen
+'
+'Redistribution and use in source and binary forms, with or without modification, 
+'are permitted provided that the following conditions are met: 
+'
+'1.) Redistributions of source code must retain the above copyright notice, 
+'this list of conditions and the following disclaimer. 
+'2.) Redistributions in binary form must reproduce the above copyright notice, 
+'this list of conditions and the following disclaimer in the documentation 
+'and/or other materials provided with the distribution. 
+'3.) The name of the author may not be used to endorse or promote products derived 
+'from this software without specific prior written permission. 
+'
+'See LICENSE.TXT that should have accompanied this software for full terms and 
+'conditions.
+
+Imports System.IO
 
 Public Class frmMain
 
@@ -9,6 +26,9 @@ Public Class frmMain
     Public v_Friends As String
     Public v_Botnet As String
     Public v_Clan As String
+    Public pConf As ProfileConfig
+    Public cConf As ConfigConfig
+
 
     Public Sub LoadBot(ByVal Text As String, Optional ByVal AutoConnect As Boolean = False)
         If Directory.Exists(Application.StartupPath & "\Profiles\" & Text) Then
@@ -24,6 +44,7 @@ Public Class frmMain
             uiBotInstance(index).TabIndex = index
             uiBotInstance(index).Tag = Text
             uiBotInstance(index).Dock = DockStyle.Fill
+            uiBotInstance(index).pConf = Me.pConf
             uiBotInstance(index).Refresh()
 
             uiBotInstance(index).tabLists.TabPages(0).Text = Me.v_Channel
@@ -102,5 +123,10 @@ Public Class frmMain
     Private Sub frmMain_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         LoadingScreen.Visible = True
         LoadingScreen.Show()
+    End Sub
+
+    Private Sub ConfigurationToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConfigurationToolStripMenuItem.Click
+        Configuration.SetText(Me.cConf)
+        Configuration.Show()
     End Sub
 End Class

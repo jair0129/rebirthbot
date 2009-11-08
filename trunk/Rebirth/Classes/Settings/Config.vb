@@ -1,13 +1,51 @@
-﻿Imports System.Xml
+﻿'RebirthBot
+'Copyright (C) 2009 by Spencer Ragen
+'
+'Redistribution and use in source and binary forms, with or without modification, 
+'are permitted provided that the following conditions are met: 
+'
+'1.) Redistributions of source code must retain the above copyright notice, 
+'this list of conditions and the following disclaimer. 
+'2.) Redistributions in binary form must reproduce the above copyright notice, 
+'this list of conditions and the following disclaimer in the documentation 
+'and/or other materials provided with the distribution. 
+'3.) The name of the author may not be used to endorse or promote products derived 
+'from this software without specific prior written permission. 
+'
+'See LICENSE.TXT that should have accompanied this software for full terms and 
+'conditions.
+
+Imports System.Xml
 Imports System.IO
 
+
+
+''' <summary>
+''' Master config class.  Handles loading and saving.
+''' </summary>
+''' <remarks>This should probably be named MasterConfig</remarks>
 Public Class Config
     Private bnetCfg As BnetConfig
     Private botnetCfg As BotnetConfig
+    Private mType As String
+    Private mLang As String
+    Private mProfilename As String
 
+    Public Sub New()
+        bnetCfg = New BnetConfig
+        botnetCfg = New BotnetConfig
+    End Sub
+
+    ''' <summary>
+    ''' Load Battle.net and Botnet configurations
+    ''' </summary>
+    ''' <param name="Filename">Profile to load</param>
+    ''' <remarks>Will eventually support IRC configurations</remarks>
     Public Sub LoadConfig(ByVal Filename As String)
         bnetCfg = New BnetConfig
         botnetCfg = New BotnetConfig
+
+        mProfilename = Filename
 
         Dim m_xmld As XmlDocument
 
@@ -29,6 +67,13 @@ Public Class Config
         If type = "" Then Exit Sub
         If langCheck = "" Then langCheck = "en-US"
 
+        mType = type
+        mLang = langCheck
+
+        ' for some reason this isn't working...
+        Debug.Print(Filename & " colors > " & File.Exists(Application.StartupPath & "\Profiles\" & Filename & "\colors.xml"))
+        Debug.Print("master colors > " & File.Exists(Application.StartupPath & "\localization\colors_" & langCheck & ".xml"))
+
         If Not File.Exists(Application.StartupPath & "\Profiles\" & Filename & "\colors.xml") Then
             If Not File.Exists(Application.StartupPath & "\localization\colors_" & langCheck & ".xml") Then
                 Throw New FileNotFoundException
@@ -46,7 +91,7 @@ Public Class Config
         Dim lang As String = ""
 
         m_xmldColors.Load(Application.StartupPath & "\Profiles\" & Filename & "\colors.xml")
-        m_nodelistColors = m_xmldColors.SelectNodes("/connection")
+        m_nodelistColors = m_xmldColors.SelectNodes("/colors")
         For Each m_nodeColors In m_nodelistColors
             lang = m_nodeColors.Attributes.GetNamedItem("lang").Value
         Next
@@ -94,17 +139,24 @@ Public Class Config
         Return ret
     End Function
 
+    ''' <summary>
+    ''' Save the currently loaded configurations.
+    ''' </summary>
+    ''' <param name="Filename">Profile to save</param>
     Public Sub SaveConfig(ByVal Filename As String)
         Dim settings As New XmlWriterSettings()
 
         settings.Indent = True
         settings.NewLineOnAttributes = True
 
-        Using writer As XmlWriter = XmlWriter.Create(Application.StartupPath & "\Profiles\" & Filename, settings)
+        Using writer As XmlWriter = XmlWriter.Create(Application.StartupPath & "\Profiles\" & Filename & "\config.xml", settings)
             writer.WriteStartDocument()
-            writer.WriteStartElement("Connection")
+            writer.WriteStartElement("connection")
+            writer.WriteAttributeString("type", mType)
+            writer.WriteAttributeString("lang", mLang)
 
             writer.WriteStartElement("bnet")
+            writer.WriteAttributeString("enabled", True)
 
             writer.WriteStartElement("username")
             writer.WriteString(Me.bnetCfg.USERNAME)
@@ -141,6 +193,7 @@ Public Class Config
             writer.WriteEndElement()
 
             writer.WriteStartElement("botnet")
+            writer.WriteAttributeString("enabled", False)
 
             writer.WriteStartElement("enablebotnet")
             writer.WriteString(Me.botnetCfg.ENABLE)
@@ -190,8 +243,13 @@ Public Class Config
             writer.WriteString(Me.botnetCfg.DBMASK)
             writer.WriteEndElement()
 
-
             writer.WriteEndElement()
+
+
+            writer.WriteStartElement("settings")
+            writer.WriteElementString("trigger", ".")
+            writer.WriteEndElement()
+
 
             writer.WriteEndElement()
             writer.WriteEndDocument()
@@ -216,4 +274,55 @@ Public Class Config
             botnetCfg = value
         End Set
     End Property
+
+    Public Property LANG() As String
+        Get
+            Return mLang
+        End Get
+        Set(ByVal value As String)
+            mLang = value
+        End Set
+    End Property
+
+    Public Property TYPE() As String
+        Get
+            Return mType
+        End Get
+        Set(ByVal value As String)
+            mType = value
+        End Set
+    End Property
+
+    Public Sub ConfirmColorsFile()
+        Dim m_xmld As XmlDocument
+
+        Dim m_nodelist As XmlNodeList
+        Dim m_node As XmlNode
+
+        Dim langCheck As String = ""
+        Dim cfgPath As String = Application.StartupPath & "\Profiles\" & mProfilename & "\config.xml"
+        Dim colPath As String = Application.StartupPath & "\Profiles\" & mProfilename & "\colors.xml"
+
+        m_xmld = New XmlDocument()
+        m_xmld.Load(cfgPath)
+
+        m_nodelist = m_xmld.SelectNodes("/connection")
+        For Each m_node In m_nodelist
+            langCheck = m_node.Attributes.GetNamedItem("lang").Value
+        Next
+
+        If langCheck = "" Then langCheck = "en-US"
+
+        Debug.Print(mProfilename & " colors > " & File.Exists(colPath))
+        Debug.Print("master colors > " & File.Exists(Application.StartupPath & "\localization\colors_" & langCheck & ".xml"))
+
+        If File.Exists(colPath) = False Then
+            If Not File.Exists(Application.StartupPath & "\localization\colors_" & langCheck & ".xml") Then
+                Debug.Print("failed to find master color")
+            End If
+
+            File.Copy(Application.StartupPath & "\localization\colors_" & langCheck & ".xml", colPath, True)
+        End If
+        If File.Exists(colPath) = False Then Debug.Print("shits creek")
+    End Sub
 End Class

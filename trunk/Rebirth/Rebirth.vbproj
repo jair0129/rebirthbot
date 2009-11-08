@@ -98,7 +98,9 @@
     <Compile Include="Classes\Interface\ChatItem.vb" />
     <Compile Include="Classes\Interface\ChatNode.vb" />
     <Compile Include="Classes\Interface\ColorItem.vb" />
+    <Compile Include="Classes\Interface\ConfigConfig.vb" />
     <Compile Include="Classes\Interface\LanguageItem.vb" />
+    <Compile Include="Classes\Interface\ProfileConfig.vb" />
     <Compile Include="Classes\IRC\IrcConnection.vb" />
     <Compile Include="Classes\Misc\DownloadFile.vb" />
     <Compile Include="Classes\Misc\ProfileInfo.vb" />
