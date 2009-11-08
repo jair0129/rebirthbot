@@ -1,6 +1,28 @@
-﻿
+﻿'RebirthBot
+'Copyright (C) 2009 by Spencer Ragen
+'
+'Redistribution and use in source and binary forms, with or without modification, 
+'are permitted provided that the following conditions are met: 
+'
+'1.) Redistributions of source code must retain the above copyright notice, 
+'this list of conditions and the following disclaimer. 
+'2.) Redistributions in binary form must reproduce the above copyright notice, 
+'this list of conditions and the following disclaimer in the documentation 
+'and/or other materials provided with the distribution. 
+'3.) The name of the author may not be used to endorse or promote products derived 
+'from this software without specific prior written permission. 
+'
+'See LICENSE.TXT that should have accompanied this software for full terms and 
+'conditions.
+
 Imports System.IO
 Imports System.Threading
+
+''' <summary>
+''' Main interface of the program.
+''' </summary>
+''' <remarks>There's way too much to comment right now.  I'll get around to it
+''' later some time.</remarks>
 
 Public Class BotInterface
 
@@ -27,9 +49,9 @@ Public Class BotInterface
     Private _triedTabs As List(Of String)
 
     Public langCode As String
+    Public pConf As ProfileConfig
 
     Public EnableConnect As Boolean
-
 
 #Region "delegate event declares"
     Private Delegate Sub BNET_AccountLogonAcceptedDelegate()
@@ -67,7 +89,7 @@ Public Class BotInterface
     Private Delegate Sub BNET_FriendsUpdateDelegate(ByVal index As Byte, ByVal status As Byte, ByVal locStatus As Byte, ByVal ProductID As Long, ByVal Location As String)
     Private Delegate Sub BNET_GetIconDataDelegate(ByVal filetime As ULong, ByVal filename As String, ByVal client As String, ByVal cdkey As String, ByVal server As String)
     Private Delegate Sub BNET_Info_BroadcastDelegate(ByVal Text As String)
-    Private Delegate Sub BNET_Info_ChannelDelegate(ByVal Text As String)
+    Private Delegate Sub BNET_Info_ChannelDelegate(ByVal Text As String, ByVal Flags As Long)
     Private Delegate Sub BNET_Info_InformationDelegate(ByVal Text As String)
     Private Delegate Sub BNET_PacketReceivedDelegate(ByVal pID As Byte)
     Private Delegate Sub BNET_PacketSentDelegate(ByVal Packet As SentBnetData)
@@ -114,7 +136,8 @@ Public Class BotInterface
 
         Dim k As New Config
         k.LoadConfig(Me.Tag)
-        k = Nothing
+
+        k.ConfirmColorsFile()
 
         MColor = New MasterColor
         MColor.LoadColors(Me.Tag)
@@ -160,6 +183,13 @@ Public Class BotInterface
         Me.lvBotnetUsers.Font = i.FONT
         Me.lvBotnetUsers.BackColor = i.BACKCOLOR.VALUE
         Me.lvBotnetUsers.ForeColor = i.FORECOLOR.VALUE
+
+        i = MColor.GetclanList
+        Me.lvClan.Font = i.FONT
+        Me.lvClan.BackColor = i.BACKCOLOR.VALUE
+        Me.lvClan.ForeColor = i.FORECOLOR.VALUE
+
+        k = Nothing
     End Sub
 
     Private Sub BotInterface_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
@@ -218,6 +248,13 @@ Public Class BotInterface
             ProfilePanes = New Collection
             Dim k As New Config
             k.LoadConfig(Me.Tag)
+            Debug.Print("Username: " & k.BNET.USERNAME)
+            Debug.Print("Password: " & k.BNET.PASSWORD)
+            Debug.Print("Server: " & k.BNET.SERVER)
+            Debug.Print("CDKey: " & k.BNET.CDKEY)
+            Debug.Print("Client: " & k.BNET.CLIENT)
+            Debug.Print("Home: " & k.BNET.HOME)
+            Debug.Print("Owner: " & k.BNET.OWNER)
             BOT = New BnetConnection(k.BNET)
             k = Nothing
             BOT.Connect()
@@ -525,8 +562,18 @@ getFile:
         TextEvents.Item("bnetbroadcast").AddText(Me.rtbChat, Text)
     End Sub
 
-    Public Sub BNET_Info_Channel(ByVal Text As String)
-        TextEvents.Item("bnetchanneljoined").AddText(Me.rtbChat, Text)
+    Public Sub BNET_Info_Channel(ByVal Text As String, ByVal Flags As Long)
+        Dim k As String = TextEvents.Item("channelpublic").ToString()
+
+        If (Flags And CHAN_PUBLIC) = CHAN_PUBLIC Then k = TextEvents.Item("channelpublic").ToString()
+        If (Flags And CHAN_MODERATED) = CHAN_MODERATED Then k = TextEvents.Item("channelmoderated").ToString()
+        If (Flags And CHAN_RESTRICTED) = CHAN_RESTRICTED Then k = TextEvents.Item("channelrestricted").ToString()
+        If (Flags And CHAN_SILENT) = CHAN_SILENT Then k = TextEvents.Item("channelsilent").ToString()
+        If (Flags And CHAN_SYSTEM) = CHAN_SYSTEM Then k = TextEvents.Item("channelsystem").ToString()
+        If (Flags And CHAN_PRODSPEC) = CHAN_PRODSPEC Then k = TextEvents.Item("channelprodspec").ToString()
+        If (Flags And CHAN_GLOBAL) = CHAN_GLOBAL Then k = TextEvents.Item("channelglobal").ToString()
+
+        TextEvents.Item("bnetchanneljoined").AddText(Me.rtbChat, Text, k)
         _channel = Text
         Me.lvChannel.Items.Clear()
         Call UpdateChannelInfo()
@@ -647,26 +694,26 @@ getFile:
 
         Select Case locStatus
             Case &H0
-                _locS = "Offline"
-                _locC = "Offline"
-                _sts = "Offline"
+                _locS = TextEvents.Item("friendslocationoffline").ToString()
+                _locC = TextEvents.Item("friendslocationoffline").ToString()
+                _sts = TextEvents.Item("friendslocationoffline").ToString()
             Case &H1
-                _locS = "Not in chat"
-                _locC = "Not in chat"
+                _locS = TextEvents.Item("friendslocationnotinchat").ToString()
+                _locC = TextEvents.Item("friendslocationnotinchat").ToString()
             Case &H2
-                _locS = "In chat"
+                _locS = TextEvents.Item("friendslocationinchat").ToString()
                 _locC = Location
             Case &H3
-                _locS = "In public game"
+                _locS = TextEvents.Item("friendslocationinpublicgame").ToString()
                 _locC = Location
             Case &H4
-                _locS = "In private game"
-                _locC = "<non-mutual>"
+                _locS = TextEvents.Item("friendslocationinprivategame").ToString()
+                _locC = TextEvents.Item("friendslocationnonmutual").ToString()
             Case &H5
-                _locS = "In private game"
+                _locS = TextEvents.Item("friendslocationinprivategame").ToString()
                 _locC = Location
             Case Else
-                _locS = "Unknown location"
+                _locS = TextEvents.Item("friendslocationunknown").ToString()
                 _locC = Location
         End Select
 
@@ -706,26 +753,26 @@ getFile:
 
         Select Case locStatus
             Case &H0
-                _locS = "Offline"
-                _locC = "Offline"
-                _sts = "Offline"
+                _locS = TextEvents.Item("friendslocationoffline").ToString()
+                _locC = TextEvents.Item("friendslocationoffline").ToString()
+                _sts = TextEvents.Item("friendslocationoffline").ToString()
             Case &H1
-                _locS = "Not in chat"
-                _locC = "Not in chat"
+                _locS = TextEvents.Item("friendslocationnotinchat").ToString()
+                _locC = TextEvents.Item("friendslocationnotinchat").ToString()
             Case &H2
-                _locS = "In chat"
+                _locS = TextEvents.Item("friendslocationinchat").ToString()
                 _locC = Location
             Case &H3
-                _locS = "In public game"
+                _locS = TextEvents.Item("friendslocationinpublicgame").ToString()
                 _locC = Location
             Case &H4
-                _locS = "In private game"
-                _locC = "<non-mutual>"
+                _locS = TextEvents.Item("friendslocationinprivategame").ToString()
+                _locC = TextEvents.Item("friendslocationnonmutual").ToString()
             Case &H5
-                _locS = "In private game"
+                _locS = TextEvents.Item("friendslocationinprivategame").ToString()
                 _locC = Location
             Case Else
-                _locS = "Unknown location"
+                _locS = TextEvents.Item("friendslocationunknown").ToString()
                 _locC = Location
         End Select
 
@@ -772,10 +819,10 @@ getFile:
                 _locC = TextEvents.Item("friendslocationoffline").ToString()
                 _sts = TextEvents.Item("friendslocationoffline").ToString()
             Case &H1
-                _locS = TextEvents.Item("friendslocaltionnotinchat").ToString()
-                _locC = TextEvents.Item("friendslocaltionnotinchat").ToString()
+                _locS = TextEvents.Item("friendslocationnotinchat").ToString()
+                _locC = TextEvents.Item("friendslocationnotinchat").ToString()
             Case &H2
-                _locS = TextEvents.Item("friendslocaltioninchat").ToString()
+                _locS = TextEvents.Item("friendslocationinchat").ToString()
                 _locC = Location
             Case &H3
                 _locS = TextEvents.Item("friendslocationinpublicgame").ToString()
@@ -1019,8 +1066,8 @@ getFile:
         Me.Invoke(New BNET_Info_BroadcastDelegate(AddressOf BNET_Info_Broadcast), Text)
     End Sub
 
-    Private Sub BOT_BNET_Info_Channel(ByVal Text As String) Handles BOT.BNET_Info_Channel
-        Me.Invoke(New BNET_Info_ChannelDelegate(AddressOf BNET_Info_Channel), Text)
+    Private Sub BOT_BNET_Info_Channel(ByVal Text As String, ByVal Flags As Long) Handles BOT.BNET_Info_Channel
+        Me.Invoke(New BNET_Info_ChannelDelegate(AddressOf BNET_Info_Channel), Text, Flags)
     End Sub
 
     Private Sub BOT_BNET_Info_Information(ByVal Text As String) Handles BOT.BNET_Info_Information
@@ -1042,6 +1089,9 @@ getFile:
 
             WindowsFormsSynchronizationContext.AutoInstall = False
 
+            Dim pcfg As ProfileConfig = Me.pConf
+            pcfg.p_Title = pcfg.p_Title.Replace("($arg0)", name)
+
             If name = Me._name Then
                 Dim prof As New MyProfile
                 prof.txtLoc.Text = PInfo.LOCATION
@@ -1054,7 +1104,7 @@ getFile:
                 prof.txtDL.Text = PInfo.DISCONNECTSLADDER
                 prof.txtR.Text = PInfo.RATINGLADDER
                 prof.BOT = Me.bot
-                prof.Text = "My Profile"
+                prof.SetText(pcfg)
                 Application.Run(prof)
             Else
                 Dim prof As New UserProfile
@@ -1067,7 +1117,7 @@ getFile:
                 prof.txtLL.Text = PInfo.LOSSESLADDER
                 prof.txtDL.Text = PInfo.DISCONNECTSLADDER
                 prof.txtR.Text = PInfo.RATINGLADDER
-                prof.Text = "Profile of " & name
+                prof.SetText(pcfg)
                 Application.Run(prof)
             End If
         End If
@@ -1230,6 +1280,9 @@ getFile:
                 _triedTabs.Clear()
                 .SelectedText = _lastTab
             End With
+        Else
+            ' clears the last tab because user began typing again
+            _lastTab = ""
         End If
     End Sub
 
@@ -1316,5 +1369,9 @@ getFile:
         If val = "-1" Then Exit Sub
 
         Me.ProfilePanes.Add(lvChannel.SelectedItems(0).SubItems(1).Text, val)
+    End Sub
+
+    Private Sub cmbTextEntry_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTextEntry.SelectedIndexChanged
+
     End Sub
 End Class

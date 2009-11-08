@@ -31,6 +31,7 @@ Partial Class frmMain
         Me.mnuReconnect = New System.Windows.Forms.ToolStripMenuItem
         Me.mnuDisconnect = New System.Windows.Forms.ToolStripMenuItem
         Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ConfigurationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -48,7 +49,7 @@ Partial Class frmMain
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuLoadBot, Me.mnuUnload, Me.mnuConnection, Me.TestToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuLoadBot, Me.mnuUnload, Me.mnuConnection, Me.ConfigurationToolStripMenuItem, Me.TestToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(795, 24)
@@ -92,6 +93,12 @@ Partial Class frmMain
         Me.TestToolStripMenuItem.Size = New System.Drawing.Size(38, 20)
         Me.TestToolStripMenuItem.Text = "test"
         '
+        'ConfigurationToolStripMenuItem
+        '
+        Me.ConfigurationToolStripMenuItem.Name = "ConfigurationToolStripMenuItem"
+        Me.ConfigurationToolStripMenuItem.Size = New System.Drawing.Size(84, 20)
+        Me.ConfigurationToolStripMenuItem.Text = "Configuration"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -119,5 +126,6 @@ Partial Class frmMain
     Friend WithEvents mnuReconnect As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuDisconnect As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TestToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ConfigurationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

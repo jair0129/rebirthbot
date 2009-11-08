@@ -1,19 +1,53 @@
-﻿Public Class SentBnetData
+﻿'RebirthBot
+'Copyright (C) 2009 by Spencer Ragen
+'
+'Redistribution and use in source and binary forms, with or without modification, 
+'are permitted provided that the following conditions are met: 
+'
+'1.) Redistributions of source code must retain the above copyright notice, 
+'this list of conditions and the following disclaimer. 
+'2.) Redistributions in binary form must reproduce the above copyright notice, 
+'this list of conditions and the following disclaimer in the documentation 
+'and/or other materials provided with the distribution. 
+'3.) The name of the author may not be used to endorse or promote products derived 
+'from this software without specific prior written permission. 
+'
+'See LICENSE.TXT that should have accompanied this software for full terms and 
+'conditions.
+
+''' <summary>
+''' Contains information about data being sent to Battle.net.
+''' </summary>
+Public Class SentBnetData
     Private msg_Text As String
     Private msg_Chat As Boolean
     Private pkt_ID As Byte
     Private pkt_Name As String
 
+    ''' <summary>
+    ''' Create a new SentBnetData for a packet.
+    ''' </summary>
+    ''' <param name="pID">Packet ID of packet being sent</param>
     Public Sub New(ByVal pID As Byte)
         ID = pID
         msg_Chat = False
     End Sub
 
+    ''' <summary>
+    ''' Create a new SentBnetData for a SID_CHATCOMMAND.
+    ''' </summary>
+    ''' <param name="msg">Message sent in SID_CHATCOMMAND</param>
+    ''' <remarks></remarks>
     Public Sub New(ByVal msg As String)
         msg_Text = msg
         msg_Chat = True
     End Sub
 
+    ''' <summary>
+    ''' Sets or gets the message sent in a SID_CHATCOMMAND packet
+    ''' </summary>
+    ''' <value>Message sent</value>
+    ''' <returns>Message sent</returns>
     Public Property TEXT() As String
         Get
             Return msg_Text
@@ -23,6 +57,11 @@
         End Set
     End Property
 
+    ''' <summary>
+    ''' Sets or gets the type of SentBnetData stored
+    ''' </summary>
+    ''' <value>True - SID_CHATCOMMAND and its associated message, False - Some other packet</value>
+    ''' <returns>True for stored text messages and False for any other packet</returns>
     Public Property CHAT() As Boolean
         Get
             Return msg_Chat
@@ -32,12 +71,22 @@
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets the packet's string name
+    ''' </summary>
+    ''' <returns>Packet's string name</returns>
     Public ReadOnly Property NAME() As String
         Get
             Return pkt_Name
         End Get
     End Property
 
+    ''' <summary>
+    ''' Sets or gets the packet id.
+    ''' </summary>
+    ''' <value>Packet ID as byte</value>
+    ''' <returns>Packet ID as byte</returns>
+    ''' <remarks>When Setting, the packet name is also stored.</remarks>
     Public Property ID() As Byte
         Get
             Return pkt_ID

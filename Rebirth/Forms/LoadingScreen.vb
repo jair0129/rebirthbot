@@ -1,9 +1,34 @@
-﻿Imports System.IO
+﻿'RebirthBot
+'Copyright (C) 2009 by Spencer Ragen
+'
+'Redistribution and use in source and binary forms, with or without modification, 
+'are permitted provided that the following conditions are met: 
+'
+'1.) Redistributions of source code must retain the above copyright notice, 
+'this list of conditions and the following disclaimer. 
+'2.) Redistributions in binary form must reproduce the above copyright notice, 
+'this list of conditions and the following disclaimer in the documentation 
+'and/or other materials provided with the distribution. 
+'3.) The name of the author may not be used to endorse or promote products derived 
+'from this software without specific prior written permission. 
+'
+'See LICENSE.TXT that should have accompanied this software for full terms and 
+'conditions.
+
+Imports System.IO
+
+''' <summary>
+''' Preload interface language, check for updates, check for directory structures,
+''' check for proper configurations, check for hashes.
+''' </summary>
+''' <remarks>
+''' The user will not see this form unless they have an incredibly slow computer,
+''' internet connection, or both.</remarks>
 
 Public NotInheritable Class LoadingScreen
 
     Private WithEvents SiteCheck As WebsiteCheck
-    Private WithEvents mainmenus As Localization
+    Private WithEvents interfacetext As Localization
     Private WithEvents fileDownload As DownloadFile
 
     Private canClose As Boolean
@@ -41,6 +66,8 @@ skipItem:
     End Sub
 
     Private Sub SiteCheck_FileDownloaded(ByVal URL As String, ByVal LocalPath As String) Handles SiteCheck.FileDownloaded
+        If LocalPath.Substring(LocalPath.LastIndexOf(".") + 1) <> "rar" Then Exit Sub
+
         Dim str As String = "Update downloaded to: " & vbCrLf & LocalPath & vbCrLf
         str &= vbCrLf & "To use the new version, please unpack and run."
 
@@ -67,40 +94,51 @@ skipItem:
     Private Sub ContinueLoading()
         Dim k As New MasterSettings
 
-        mainmenus = New Localization
+        interfacetext = New Localization
         fileDownload = New DownloadFile
+
+        Me.AddText("Checking local file structure...")
+        Dim rf As New List(Of RebirthFile)
+        rf = SiteCheck.GrabFileList()
+
+        For Each rfile As RebirthFile In rf
+            If rfile.IsRequired Then
+                If rfile.IsDirectory And Not Directory.Exists(Application.StartupPath & "\" & rfile.FilePath) Then
+                    Directory.CreateDirectory(Application.StartupPath & "\" & rfile.FilePath)
+                End If
+                If Not rfile.IsDirectory Then
+                    If Not File.Exists(Application.StartupPath & "\" & rfile.FilePath & "\" & rfile.FileName) Then
+                        SiteCheck.GrabFile(BOT_SITE & rfile.FilePath.Replace("\", "/") & "/" & rfile.FileName, _
+                                           Application.StartupPath & "\" & rfile.FilePath & "\" & rfile.FileName)
+                    End If
+                End If
+            End If
+        Next
 
         k.LoadSettingsNoAction("settings")
         Me.AddText("Loading localization settings...")
         Me.AddText("Loading language ", k.m_interfaceLang.NAME)
 
-        mainmenus.LoadMenuLanguage(k.m_interfaceLang.CODE)
+        interfacetext.LoadMenuLanguage(k.m_interfaceLang.CODE)
 
-        frmMain.mnuLoadBot.Text = mainmenus.MENU_LOADBOT
-        frmMain.mnuUnload.Text = mainmenus.MENU_UNLOADBOT
-        frmMain.mnuConnection.Text = mainmenus.MENU_CONNECTION
-        frmMain.mnuReconnect.Text = mainmenus.MENU_BNETRECONNECT
-        frmMain.mnuDisconnect.Text = mainmenus.MENU_BNETDISCONNECT
+        frmMain.mnuLoadBot.Text = interfacetext.MENU_LOADBOT
+        frmMain.mnuUnload.Text = interfacetext.MENU_UNLOADBOT
+        frmMain.mnuConnection.Text = interfacetext.MENU_CONNECTION
+        frmMain.mnuReconnect.Text = interfacetext.MENU_BNETRECONNECT
+        frmMain.mnuDisconnect.Text = interfacetext.MENU_BNETDISCONNECT
 
-        frmMain.v_Channel = mainmenus.TAB_CHANNEL
-        frmMain.v_Friends = mainmenus.TAB_FRIENDS
-        frmMain.v_Botnet = mainmenus.TAB_BOTNET
-        frmMain.v_Clan = mainmenus.TAB_CLAN
+        frmMain.v_Channel = interfacetext.TAB_CHANNEL
+        frmMain.v_Friends = interfacetext.TAB_FRIENDS
+        frmMain.v_Botnet = interfacetext.TAB_BOTNET
+        frmMain.v_Clan = interfacetext.TAB_CLAN
+
+        frmMain.pConf = interfacetext.m_ProfileConfig
+        frmMain.cConf = interfacetext.m_ConfigConfig
 
         ReDim uiBotInstance(0)
 
         CreateColorList()
 
-        Me.AddText("Checking local file structure...")
-        Directory.CreateDirectory(Application.StartupPath & "\Profiles")
-        Directory.CreateDirectory(Application.StartupPath & "\localization")
-        Directory.CreateDirectory(Application.StartupPath & "\icons")
-        Directory.CreateDirectory(Application.StartupPath & "\Hashes")
-        Directory.CreateDirectory(Application.StartupPath & "\Hashes\STAR")
-        Directory.CreateDirectory(Application.StartupPath & "\Hashes\D2DV")
-        Directory.CreateDirectory(Application.StartupPath & "\Hashes\D2XP")
-        Directory.CreateDirectory(Application.StartupPath & "\Hashes\W2BN")
-        Directory.CreateDirectory(Application.StartupPath & "\Hashes\W3XP")
 
         Dim hashRaw As String = Application.StartupPath & "\Hashes\"
         Dim urlRaw As String = "http://rabbitx86.net/rebirth/" & BOT_VERSION & "/Hashes/"
@@ -205,13 +243,20 @@ skipItem:
 
         k.LoadSettings("settings")
 
-        k = Nothing
-        mainmenus = Nothing
+        Dim f As List(Of RebirthLocalization) = SiteCheck.GetLocalizationList()
+        For Each thing In f
+            If Not k.HasLang(thing.LangItem) Then k.AddAvailableLang(thing.LangItem)
+        Next
 
-        canclose = True
+        k.SaveSettings("settings")
+
+        k = Nothing
+        interfacetext = Nothing
+
+        canClose = True
     End Sub
 
-    Private Sub mainmenus_LoadMenuLanguageFailed() Handles mainmenus.LoadMenuLanguageFailed
+    Private Sub interfacetext_LoadMenuLanguageFailed() Handles interfacetext.LoadMenuLanguageFailed
         Dim k As MsgBoxResult = MsgBox("Failed to load menu localization.  Please visit iccup.com forums for support.", MsgBoxStyle.Critical Or MsgBoxStyle.OkOnly, "Critical Error")
 
         Do Until k = MsgBoxResult.Ok
@@ -221,7 +266,7 @@ skipItem:
         Application.Exit()
     End Sub
 
-    Private Sub mainmenus_LoadMenuLanguageSucceeded() Handles mainmenus.LoadMenuLanguageSucceeded
+    Private Sub interfacetext_LoadMenuLanguageSucceeded() Handles interfacetext.LoadMenuLanguageSucceeded
         Me.AddText("Loaded interface language")
     End Sub
 
