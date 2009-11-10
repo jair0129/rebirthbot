@@ -424,14 +424,19 @@ Public Class BnetConnection
             sck.BeginReceive(buff, 0, sck.Available, SocketFlags.None, asyncnew, sck)
             sck.Send(buff, 1, SocketFlags.None)
             RaiseEvent BNET_Connected()
-            'Select Case cfg.CLIENT
-            'Case "W2BN"
-            '    SEND_SID_CLIENTID2()
-            '    SEND_SID_LOCALEINFO()
-            '    SEND_SID_STARTVERSIONING()
-            'Case "WAR3", "W3XP", "STAR", "SEXP", "D2DV", "D2XP"
-            SEND_SID_AUTH_INFO()
-            'End Select
+            Try
+                'Select Case cfg.CLIENT
+                'Case "W2BN"
+                '    SEND_SID_CLIENTID2()
+                '    SEND_SID_LOCALEINFO()
+                '    SEND_SID_STARTVERSIONING()
+                'Case "WAR3", "W3XP", "STAR", "SEXP", "D2DV", "D2XP"
+                SEND_SID_AUTH_INFO()
+                'End Select
+            Catch ex As Exception
+                Me.Disconnect()
+                RaiseEvent BNET_Exception(ex)
+            End Try
         End If
     End Sub
 
